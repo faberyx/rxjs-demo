@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "test rxjs",
     "scripts": {   
-      "start": "webpack-dev-server"
+      "start": "webpack-dev-server --watch --inline",
+      "postinstall": "typings install"
   },
   "dependencies": {
     "rxjs": "^5.4.3"
