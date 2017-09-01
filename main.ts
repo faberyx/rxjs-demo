@@ -1,24 +1,21 @@
 import { Observable } from 'rxjs'
 
-let numbers = [1,2,3,4];
+let circle; 
 
-let source = Observable.create(observable => {
+let source = Observable.fromEvent(document,'mousemove')
+    .map((e : MouseEvent) => { return {x: e.clientX , y: e.clientY }})
+    .delay(300);
 
-    let loader = (i) =>{
-        if(i < numbers.length){
-            setTimeout(()=>{
-                observable.next(numbers[i++]);
-                loader(i)
-            }, 2000);
-        }else{
-            observable.complete();
-        }
-    };
-    loader(0);
-}).map(data => data + 5).filter(data => data > 8);
+
+function onNext(value){
+    let circle = document.getElementById('circle') ;
+    circle.style.left = value.x;
+    circle.style.top = value.y
+}
+
 
 source.subscribe(
-    observer => { console.log(observer)},
+    onNext,
     error => {},
     () => { console.log('completed')}
 )
